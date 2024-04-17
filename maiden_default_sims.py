@@ -1,6 +1,7 @@
 import random
 import numpy as np
 from damage_calcs import reduce_defence
+from default_spec_options import create_player_setup
 
 class Player:
     def __init__(self,role):
@@ -37,8 +38,11 @@ class monsterClass:
         monster.crushDefLvl = crush
         monster.rangedDefLvl = ranged
         monster.cap = cap
+        monster.storedDefLvl = defence
 
 maiden = monsterClass(350, 200, 0, 0, 0, 0)
+xarpus = monsterClass(220, 250, 0, 0, 160, 0)
+
 
 def simulate_boss_fight(players, monster, max_ticks=25):
     tick = 0
@@ -49,141 +53,13 @@ def simulate_boss_fight(players, monster, max_ticks=25):
         tick += 1
     return monster.defenceLvl
 
-def create_player_setup(setup_name):
-    # Initialize empty players
-    players = [Player(f"player{i + 1}") for i in range(4)]
-    
-    # Nomenclautre:
-    # players[0] = mage
-    # players[1] = mfrz
-    # players[2] = rdps
-    # players[3] = mdps
 
-    # Configure based on setup name
-    # DWH BGS SETUPS
-    if setup_name == "2DWH2BGS":
-        players[0].bgs_hits = [11]
-        players[1].bgs_hits = [11]
-        players[2].hammer_hits = [10]
-        players[3].hammer_hits = [10]
-    
-    elif setup_name == "2DWH2BGS1BGS":
-        players[0].bgs_hits = [11,17]
-        players[1].bgs_hits = [11]
-        players[2].hammer_hits = [10]
-        players[3].hammer_hits = [10]
 
-    elif setup_name == "2DWH2BGS2BGS":
-        players[0].bgs_hits = [11,17]
-        players[1].bgs_hits = [11,17]
-        players[2].hammer_hits = [10]
-        players[3].hammer_hits = [10]
-
-    elif setup_name == "2DWH2BGS3BGS":
-        players[0].bgs_hits = [11,17]
-        players[1].bgs_hits = [11,17]
-        players[2].hammer_hits = [10]
-        players[2].bgs_hits = [21]
-        players[3].hammer_hits = [10]
-
-    # GLAIVE SETUPS
-    elif setup_name == "2DWH2G":
-        players[0].ralos_hits = [11]
-        players[1].ralos_hits = [11]
-        players[2].hammer_hits = [10]
-        players[3].hammer_hits = [10]
-
-    elif setup_name == "2DWH2G1G":
-        players[0].ralos_hits = [11,17]
-        players[1].ralos_hits = [11]
-        players[2].hammer_hits = [10]
-        players[3].hammer_hits = [10]
-
-    elif setup_name == "2DWH2G1BGS":
-        players[0].ralos_hits = [11]
-        players[1].ralos_hits = [11]
-        players[2].hammer_hits = [10]
-        players[3].hammer_hits = [10]
-        players[3].bgs_hits = [16]
-
-    elif setup_name == "2DWH2G1G1BGS":
-        players[0].ralos_hits = [11,17]
-        players[1].ralos_hits = [11]
-        players[2].hammer_hits = [10]
-        players[3].hammer_hits = [10]
-        players[3].bgs_hits = [21]
-
-    # ELDER GLAIVE SETUPS
-    elif setup_name == "2EM2G":
-        players[0].ralos_hits = [11]
-        players[1].ralos_hits = [11]
-        players[2].emaul_hits = [10]
-        players[3].emaul_hits = [10]
-    
-    elif setup_name == "2EM2G1BGS":
-        players[0].ralos_hits = [11]
-        players[1].ralos_hits = [11]
-        players[2].emaul_hits = [10]
-        players[3].emaul_hits = [10]
-        players[3].bgs_hits = [16]
-    
-    elif setup_name == "2EM2G1G":
-        players[0].ralos_hits = [11,17]
-        players[1].ralos_hits = [11]
-        players[2].emaul_hits = [10]
-        players[3].emaul_hits = [10]
-
-    elif setup_name == "2EM2G1G1BGS":
-        players[0].ralos_hits = [11,17]
-        players[1].ralos_hits = [11]
-        players[2].emaul_hits = [10]
-        players[3].emaul_hits = [10]
-        players[3].bgs_hits = [18]          
-    
-    # ELDER BGS BU SETUPS
-    elif setup_name == "2EM2BGS":
-        players[0].bgs_hits = [11]
-        players[1].bgs_hits = [11]
-        players[2].emaul_hits = [10]
-        players[3].emaul_hits = [10]
-    
-    elif setup_name == "2EM2BGS1BGS":
-        players[0].bgs_hits = [11]
-        players[1].bgs_hits = [11]
-        players[2].emaul_hits = [10]
-        players[3].emaul_hits = [10]
-        players[3].bgs_hits = [16]
-
-    elif setup_name == "2EM2BGS2BGS":
-        players[0].bgs_hits = [11,17]
-        players[1].bgs_hits = [11,17]
-        players[2].emaul_hits = [10]
-        players[3].emaul_hits = [10]
-
-    elif setup_name == "2EM2BGS3BGS":
-        players[0].bgs_hits = [11,17]
-        players[1].bgs_hits = [11,17]
-        players[2].emaul_hits = [10]
-        players[3].emaul_hits = [10]
-        players[3].bgs_hits = [21]
-    
-    # DUO SPECS
-    elif setup_name == "duo2DWH2BGS":
-        players[0].hammer_hits = [6,12]
-        players[1].bgs_hits = [16,22]
-
-    elif setup_name == "duo2EM2BGS":
-        players[0].emaul_hits = [6,12]
-        players[1].bgs_hits = [16,22] 
-    
-    return players
-
-def main(hit_style, setup_name):
+def main(hit_style, setup_name, monster):
     players = create_player_setup(setup_name)
     for player in players:
         player.hitStyle = hit_style
 
-    monster = monsterClass(350, 200, 0, 0, 0, 0)
     num_runs = 300000
     def_levels = []
     wins_0 = 0
@@ -193,7 +69,7 @@ def main(hit_style, setup_name):
     fails = 0
 
     for i in range(num_runs):
-        monster.defenceLvl = 200
+        monster.defenceLvl = monster.storedDefLvl
         iter_def_lvl = simulate_boss_fight(players, monster)
         def_levels.append(iter_def_lvl)
         if iter_def_lvl < 1:
@@ -231,8 +107,13 @@ elder_bgs_setups = ["2EM2BGS",
                     "2EM2BGS2BGS",
                     "2EM2BGS3BGS"]
 
-duo_setups = ["duo2DWH2BGS",
-              "duo2EM2BGS"]
+duo_maiden_setups = ["duo2DWH2BGSmaiden",
+                    "duo2EM2BGSmaiden"]
+
+duo_xarpus_setups = ["duo2DWH2BGSxarp",
+                   "duo3DWH1BGSxarp",
+                   "duo2EM2BGSxarp",
+                   "duo3EM1BGSxarp"]
 
 diff_hit_types = ["live","max_minus_one","one_max"]
 
@@ -240,7 +121,9 @@ for hit_type in diff_hit_types:
     print("=======================================")
     print(f"Hit Style: {hit_type}")
     print("=======================================")
-    for setup in duo_setups:
-        main(hit_type,setup)
+    for setup in duo_maiden_setups:
+        print('setup', setup)
+        main(hit_type,setup,maiden)
+        
     print("///////////////////////////////////////")
     print()
