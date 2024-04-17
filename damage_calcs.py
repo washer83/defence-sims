@@ -12,7 +12,7 @@ def roll_hit(player,max_hit):
     return hit
 
 def reduce_defence(tick, player, monster):
-    if tick in player.hammer_hits:
+    if tick in player.dwh_hits:
         apply_dwh(player, monster)
     elif tick in player.bgs_hits:
         apply_bgs(player, monster)

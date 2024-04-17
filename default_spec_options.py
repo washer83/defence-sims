@@ -4,7 +4,7 @@ class Player:
         self.role = role
         # HITS
         self.bgs_hits = []
-        self.hammer_hits = []
+        self.dwh_hits = []
         self.ralos_hits = []
         self.emaul_hits = []
         #STATS
@@ -25,7 +25,7 @@ class Player:
         self.hitStyle = "live" # options: "live", "one_max", "max_minus_one"
         # hit rolls for above hit styles:
         # live: [0,max_hit] | one_max: [1, max_hit] | max_minus_one: [1, (max_hit-1)] 
-        
+
 def create_player_setup(setup_name):
     # Initialize empty players
     players = [Player(f"player{i + 1}") for i in range(4)]
@@ -41,53 +41,53 @@ def create_player_setup(setup_name):
     if setup_name == "2DWH2BGS":
         players[0].bgs_hits = [11]
         players[1].bgs_hits = [11]
-        players[2].hammer_hits = [10]
-        players[3].hammer_hits = [10]
+        players[2].dwh_hits = [10]
+        players[3].dwh_hits = [10]
     
     elif setup_name == "2DWH2BGS1BGS":
         players[0].bgs_hits = [11,17]
         players[1].bgs_hits = [11]
-        players[2].hammer_hits = [10]
-        players[3].hammer_hits = [10]
+        players[2].dwh_hits = [10]
+        players[3].dwh_hits = [10]
 
     elif setup_name == "2DWH2BGS2BGS":
         players[0].bgs_hits = [11,17]
         players[1].bgs_hits = [11,17]
-        players[2].hammer_hits = [10]
-        players[3].hammer_hits = [10]
+        players[2].dwh_hits = [10]
+        players[3].dwh_hits = [10]
 
     elif setup_name == "2DWH2BGS3BGS":
         players[0].bgs_hits = [11,17]
         players[1].bgs_hits = [11,17]
-        players[2].hammer_hits = [10]
+        players[2].dwh_hits = [10]
         players[2].bgs_hits = [21]
-        players[3].hammer_hits = [10]
+        players[3].dwh_hits = [10]
 
     # GLAIVE SETUPS
     elif setup_name == "2DWH2G":
         players[0].ralos_hits = [11]
         players[1].ralos_hits = [11]
-        players[2].hammer_hits = [10]
-        players[3].hammer_hits = [10]
+        players[2].dwh_hits = [10]
+        players[3].dwh_hits = [10]
 
     elif setup_name == "2DWH2G1G":
         players[0].ralos_hits = [11,17]
         players[1].ralos_hits = [11]
-        players[2].hammer_hits = [10]
-        players[3].hammer_hits = [10]
+        players[2].dwh_hits = [10]
+        players[3].dwh_hits = [10]
 
     elif setup_name == "2DWH2G1BGS":
         players[0].ralos_hits = [11]
         players[1].ralos_hits = [11]
-        players[2].hammer_hits = [10]
-        players[3].hammer_hits = [10]
+        players[2].dwh_hits = [10]
+        players[3].dwh_hits = [10]
         players[3].bgs_hits = [16]
 
     elif setup_name == "2DWH2G1G1BGS":
         players[0].ralos_hits = [11,17]
         players[1].ralos_hits = [11]
-        players[2].hammer_hits = [10]
-        players[3].hammer_hits = [10]
+        players[2].dwh_hits = [10]
+        players[3].dwh_hits = [10]
         players[3].bgs_hits = [21]
 
     # ELDER GLAIVE SETUPS
@@ -146,7 +146,7 @@ def create_player_setup(setup_name):
     
     # DUO SPECS
     elif setup_name == "duo2DWH2BGSmaiden":
-        players[0].hammer_hits = [6,12]
+        players[0].dwh_hits = [6,12]
         players[1].bgs_hits = [16,22]
 
     elif setup_name == "duo2EM2BGSmaiden":
@@ -154,14 +154,14 @@ def create_player_setup(setup_name):
         players[1].bgs_hits = [16,22] 
     
     elif setup_name == "duo2DWH2BGSxarp":
-        players[0].hammer_hits = [1]
+        players[0].dwh_hits = [1]
         players[0].bgs_hits = [7]
-        players[1].hammer_hits = [1]
+        players[1].dwh_hits = [1]
         players[1].bgs_hits = [7]
     
     elif setup_name == "duo3DWH1BGSxarp":
-        players[0].hammer_hits = [1,7]
-        players[1].hammer_hits = [1]
+        players[0].dwh_hits = [1,7]
+        players[1].dwh_hits = [1]
         players[1].bgs_hits = [17]
 
     elif setup_name == "duo2EM2BGSxarp":

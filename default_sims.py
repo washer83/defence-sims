@@ -9,7 +9,7 @@ class Player:
         self.role = role
         # HITS
         self.bgs_hits = []
-        self.hammer_hits = []
+        self.dwh_hits = []
         self.ralos_hits = []
         self.emaul_hits = []
         #STATS
@@ -65,9 +65,6 @@ def main(hit_style, setup_name, monster):
     num_runs = 500000
     def_levels = []
     wins_0 = 0
-    wins_20 = 0
-    wins_35 = 0
-    wins_50 = 0
     fails = 0
 
     def_levels = []
@@ -77,18 +74,6 @@ def main(hit_style, setup_name, monster):
         def_levels.append(iter_def_lvl)
         if iter_def_lvl < 1:
             wins_0 += 1
-            wins_20 += 1
-            wins_35 += 1
-            wins_50 += 1
-        elif iter_def_lvl < 20:
-            wins_20 += 1
-            wins_35 += 1
-            wins_50 += 1
-        elif iter_def_lvl < 35:
-            wins_35 += 1
-            wins_50 += 1
-        elif iter_def_lvl < 50:
-            wins_50 += 1
         else:
             fails += 1
     # Calculating and writing results after all simulations
@@ -106,15 +91,6 @@ def main(hit_style, setup_name, monster):
 
     print(f"Results from {num_runs} simulations with hit style: {hit_style} and setup: {setup_name}")
     print(f"Zero defence: {(wins_0/num_runs)*100}%")
-    #print(f"20 defence: {(wins_20/num_runs)*100}%")
-    #print(f"35 defence: {(wins_35/num_runs)*100}%")
-    #print(f"50 defence: {(wins_50/num_runs)*100}%")
-    #print(f"100 defence: {wins_100/}")
-
-
-
-
-
 
 
 # Run simulations for different configurations
@@ -147,7 +123,7 @@ for hit_type in diff_hit_types:
     print("=======================================")
     print(f"Hit Style: {hit_type}")
     print("=======================================")
-    for setup in maiden_money_glaive_elder_setups:
+    for setup in duo_maiden_setups:
         print('setup', setup)
         main(hit_type,setup,maiden)
         
