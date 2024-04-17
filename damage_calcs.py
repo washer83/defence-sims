@@ -71,3 +71,12 @@ def apply_emaul(player, monster):
             updated_def_lvl = (monster.defenceLvl - reduction)
             monster.defenceLvl = max(updated_def_lvl, monster.cap, 0)  # Ensure defense does not drop below zero
     return monster.defenceLvl
+
+def simulate_boss_fight(players, monster, max_ticks=25):
+    tick = 0
+    while tick < max_ticks:
+        for player in players:
+            reduce_defence(tick, player, monster)  # This updates monster.defenceLvl directly
+        monster.defenceLvl = max(monster.defenceLvl, 0)  # Ensure it doesn't drop below 0 after all modifications
+        tick += 1
+    return monster.defenceLvl
