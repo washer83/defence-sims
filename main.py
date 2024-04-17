@@ -54,23 +54,23 @@ def main(hit_style): #add chart input?
     # 2 hammer 2 ralos test case
     player1.hammer_hits = []
     player1.bgs_hits = []
-    player1.ralos_hits = [11]
+    player1.ralos_hits = [3]
     player1.emaul_hits = []
     
     player2.hammer_hits = []
     player2.bgs_hits = []
-    player2.ralos_hits = [11]
+    player2.ralos_hits = [3]
     player2.emaul_hits = []
 
     player3.hammer_hits = []
     player3.bgs_hits = []
     player3.ralos_hits = []
-    player3.emaul_hits = [10]
+    player3.emaul_hits = [2]
 
     player4.hammer_hits = []
     player4.bgs_hits = []
     player4.ralos_hits = []
-    player4.emaul_hits = [10]
+    player4.emaul_hits = [2]
 
 
     # Player 1
@@ -105,7 +105,7 @@ def main(hit_style): #add chart input?
     maiden = monsterClass(350, 200, 0, 0, 0, 0)
     players = [player1, player2, player3, player4]
     monster = maiden 
-    num_runs = 500000
+    num_runs = 200000
     def_levels = []
     wins_0 = 0
     wins_15 = 0

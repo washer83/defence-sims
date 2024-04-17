@@ -12,17 +12,14 @@ def roll_hit(player,max_hit):
     return hit
 
 def reduce_defence(tick, player, monster):
-    #print("Tick #: ", tick)
-    #print("Starting defence level: ", monster.defenceLvl)
     if tick in player.hammer_hits:
-        monster.defenceLvl = apply_dwh(player, monster)
+        apply_dwh(player, monster)
     elif tick in player.bgs_hits:
-        monster.defenceLvl = apply_bgs(player, monster)
+        apply_bgs(player, monster)
     elif tick in player.ralos_hits:
-        monster.defenceLvl = apply_ralos(player, monster)
+        apply_ralos(player, monster)
     elif tick in player.emaul_hits: 
-        monster.defenceLvl = apply_emaul(player,monster)
-    #print("End of tick defence level: ", monster.defenceLvl)
+        apply_emaul(player,monster)
     return monster.defenceLvl
 
 def apply_dwh(player, monster):
@@ -33,7 +30,8 @@ def apply_dwh(player, monster):
     if random.randint(0, att_roll) > random.randint(0, def_roll):
         hit = roll_hit(player, max_hit)
         if hit > 0:
-            updated_def_lvl = math.ceil(monster.defenceLvl * 0.7)
+            reduction = math.floor(monster.defenceLvl * 0.7)
+            updated_def_lvl = (monster.defenceLvl - reduction)
             monster.defenceLvl = max(updated_def_lvl, monster.cap, 0)  # Ensure defense does not drop below zero
     return monster.defenceLvl
 
@@ -50,15 +48,15 @@ def apply_bgs(player, monster):
 def apply_ralos(player, monster):
     max_hit = player.ralosMax
     att_roll = player.ralosAttRoll
-    defence_lvl = monster.defenceLvl
-    def_roll = max((monster.defenceLvl + 9) * (monster.rangedDefLvl + 64), 1)
     hits_to_apply = 2
 
     for _ in range(hits_to_apply):
+        def_roll = max((monster.defenceLvl + 9) * (monster.rangedDefLvl + 64), 1)
         if random.randint(0, att_roll) > random.randint(0, def_roll):
             hit = roll_hit(player, max_hit)
             if hit > 0:
-                monster.defenceLvl = max(math.ceil(monster.defenceLvl - 0.1 * monster.magicLvl), 0)  # Check after each hit
+                monster.defenceLvl = math.ceil(monster.defenceLvl - 0.1 * monster.magicLvl)
+
     return monster.defenceLvl
 
 def apply_emaul(player, monster):
@@ -69,6 +67,7 @@ def apply_emaul(player, monster):
     if random.randint(0, att_roll) > random.randint(0, def_roll):
         hit = roll_hit(player, max_hit)
         if hit > 0:
-            updated_def_lvl = math.ceil(monster.defenceLvl * 0.65)
+            reduction = math.floor(monster.defenceLvl * 0.35)
+            updated_def_lvl = (monster.defenceLvl - reduction)
             monster.defenceLvl = max(updated_def_lvl, monster.cap, 0)  # Ensure defense does not drop below zero
     return monster.defenceLvl

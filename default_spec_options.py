@@ -1,3 +1,31 @@
+
+class Player:
+    def __init__(self,role):
+        self.role = role
+        # HITS
+        self.bgs_hits = []
+        self.hammer_hits = []
+        self.ralos_hits = []
+        self.emaul_hits = []
+        #STATS
+        self.attackLvl = 118
+        self.strengthLvl = 118
+        self.rangeLvl = 112
+        self.magicLvl = 112
+        # WEAPON INFO
+        self.ralosAttRoll = 30576
+        self.ralosMax = 24
+        self.bgsAttRoll = 69434
+        self.bgsMax = 77
+        self.dwhAttRoll = 34048
+        self.dwhMax = 82
+        self.emaulAttRoll = 35872
+        self.emaulMax = 68
+        # OTHER
+        self.hitStyle = "live" # options: "live", "one_max", "max_minus_one"
+        # hit rolls for above hit styles:
+        # live: [0,max_hit] | one_max: [1, max_hit] | max_minus_one: [1, (max_hit-1)] 
+        
 def create_player_setup(setup_name):
     # Initialize empty players
     players = [Player(f"player{i + 1}") for i in range(4)]

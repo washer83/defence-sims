@@ -1,5 +1,6 @@
 import random
 import numpy as np
+import csv
 from damage_calcs import reduce_defence
 from default_spec_options import create_player_setup
 
@@ -31,7 +32,7 @@ class Player:
         # live: [0,max_hit] | one_max: [1, max_hit] | max_minus_one: [1, (max_hit-1)] 
 
 class monsterClass:
-    def __init__(monster, magic, defence, slash, crush, ranged, cap):
+    def __init__(monster, magic, defence, slash, crush, ranged, cap, name):
         monster.magicLvl = magic
         monster.defenceLvl = defence
         monster.slashDefLvl = slash
@@ -39,9 +40,10 @@ class monsterClass:
         monster.rangedDefLvl = ranged
         monster.cap = cap
         monster.storedDefLvl = defence
+        monster.bossName = name
 
-maiden = monsterClass(350, 200, 0, 0, 0, 0)
-xarpus = monsterClass(220, 250, 0, 0, 160, 0)
+maiden = monsterClass(350, 200, 0, 0, 0, 0, "maiden")
+xarpus = monsterClass(220, 250, 0, 0, 160, 0, "xarpus")
 
 
 def simulate_boss_fight(players, monster, max_ticks=25):
@@ -59,7 +61,8 @@ def main(hit_style, setup_name, monster):
     for player in players:
         player.hitStyle = hit_style
 
-    num_runs = 300000
+    write_file = False
+    num_runs = 500000
     def_levels = []
     wins_0 = 0
     wins_20 = 0
@@ -67,6 +70,7 @@ def main(hit_style, setup_name, monster):
     wins_50 = 0
     fails = 0
 
+    def_levels = []
     for i in range(num_runs):
         monster.defenceLvl = monster.storedDefLvl
         iter_def_lvl = simulate_boss_fight(players, monster)
@@ -87,12 +91,27 @@ def main(hit_style, setup_name, monster):
             wins_50 += 1
         else:
             fails += 1
+    # Calculating and writing results after all simulations
+    if write_file == True:
+        filename = f'./sim_results/{monster.bossName}/{setup_name}_{monster.bossName}_{player.hitStyle}_def_results.csv'
+        with open(filename, 'w', newline='') as file:
+            writer = csv.writer(file)
+            writer.writerow(['Boss Defense Range', 'Percentage'])
+            for defense_range in range(0, 210, 10):
+                count = sum(1 for defense in def_levels if defense <= defense_range)
+                percentage = (count / num_runs) * 100
+                writer.writerow([f'Less than or equal to {defense_range}', percentage])
+
+
 
     print(f"Results from {num_runs} simulations with hit style: {hit_style} and setup: {setup_name}")
     print(f"Zero defence: {(wins_0/num_runs)*100}%")
-    print(f"20 defence: {(wins_20/num_runs)*100}%")
-    print(f"35 defence: {(wins_35/num_runs)*100}%")
-    print(f"50 defence: {(wins_50/num_runs)*100}%")
+    #print(f"20 defence: {(wins_20/num_runs)*100}%")
+    #print(f"35 defence: {(wins_35/num_runs)*100}%")
+    #print(f"50 defence: {(wins_50/num_runs)*100}%")
+    #print(f"100 defence: {wins_100/}")
+
+
 
 
 
@@ -128,9 +147,9 @@ for hit_type in diff_hit_types:
     print("=======================================")
     print(f"Hit Style: {hit_type}")
     print("=======================================")
-    for setup in duo_xarpus_setups:
+    for setup in maiden_money_glaive_elder_setups:
         print('setup', setup)
-        main(hit_type,setup,xarpus)
+        main(hit_type,setup,maiden)
         
     print("///////////////////////////////////////")
     print()
