@@ -9,7 +9,7 @@ class Player:
         self.role = role
         # HITS
         self.bgs_hits = []
-        self.dwh_hits = []
+        self.hammer_hits = []
         self.ralos_hits = []
         self.emaul_hits = []
         #STATS
@@ -44,6 +44,7 @@ class monsterClass:
 
 maiden = monsterClass(350, 200, 0, 0, 0, 0, "maiden")
 xarpus = monsterClass(220, 250, 0, 0, 160, 0, "xarpus")
+sotetseg = monsterClass(250, 200, 70, 70, 150, 100, "sotetseg")
 
 
 def simulate_boss_fight(players, monster, max_ticks=25):
@@ -55,16 +56,17 @@ def simulate_boss_fight(players, monster, max_ticks=25):
         tick += 1
     return monster.defenceLvl
 
-
 def main(hit_style, setup_name, monster):
     players = create_player_setup(setup_name)
     for player in players:
         player.hitStyle = hit_style
 
     write_file = False
-    num_runs = 500000
+    num_runs = 200000
     def_levels = []
     wins_0 = 0
+    wins_100 = 0
+    wins_140 = 0
     fails = 0
 
     def_levels = []
@@ -74,6 +76,11 @@ def main(hit_style, setup_name, monster):
         def_levels.append(iter_def_lvl)
         if iter_def_lvl < 1:
             wins_0 += 1
+        elif iter_def_lvl < 101:
+            wins_100 += 1
+            wins_140 += 1  # Include levels below 101 in the wins_140 count
+        elif iter_def_lvl < 141:
+            wins_140 += 1  # This now correctly includes levels from 101 to 140
         else:
             fails += 1
     # Calculating and writing results after all simulations
@@ -86,12 +93,19 @@ def main(hit_style, setup_name, monster):
                 count = sum(1 for defense in def_levels if defense <= defense_range)
                 percentage = (count / num_runs) * 100
                 writer.writerow([f'Less than or equal to {defense_range}', percentage])
-
+        filename=f'./sim_results/{monster.bossName}/sim_results_{setup_name}_{monster.bossName}_{player.hitStyle}_def_results.csv'
+        with open(filename, 'w', newline='') as file:
+            writer = csv.writer(file)
+            writer.writerow([def_levels])
 
 
     print(f"Results from {num_runs} simulations with hit style: {hit_style} and setup: {setup_name}")
-    print(f"Zero defence: {(wins_0/num_runs)*100}%")
-
+    #print(f"Zero defence: {(wins_0/num_runs)*100}%")
+    #print(f"20 defence: {(wins_20/num_runs)*100}%")
+    #print(f"35 defence: {(wins_35/num_runs)*100}%")
+    #print(f"50 defence: {(wins_50/num_runs)*100}%")
+    print(f"100 defence: {(wins_100/num_runs)*100}%")
+    print(f"140 defence: {(wins_140/num_runs)*100}%")
 
 # Run simulations for different configurations
 elder_bgs_setups = ["2EM2BGS",
@@ -117,15 +131,26 @@ maiden_money_glaive_elder_setups = ["2EM2G",
                               "2EM2G1G",
                               "2EM2G1G1BGS"]
 
-diff_hit_types = ["live","max_minus_one","one_max"]
+sote_specs = ["2DWH",
+            "2DWH1H",
+            "2DWH1BGS",
+            "2DWH1G",
+            "2EM",
+            "2EM1EM",
+            "2EM1BGS",
+            "2EM1G"]
 
+sote_test =["2DWH1G"]
+
+diff_hit_types = ["live","max_minus_one","one_max"]
+live_hits = ["live"]
 for hit_type in diff_hit_types:
     print("=======================================")
     print(f"Hit Style: {hit_type}")
     print("=======================================")
-    for setup in duo_maiden_setups:
+    for setup in sote_specs:
         print('setup', setup)
-        main(hit_type,setup,maiden)
+        main(hit_type,setup,sotetseg)
         
     print("///////////////////////////////////////")
     print()

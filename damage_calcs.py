@@ -12,7 +12,7 @@ def roll_hit(player,max_hit):
     return hit
 
 def reduce_defence(tick, player, monster):
-    if tick in player.dwh_hits:
+    if tick in player.hammer_hits:
         apply_dwh(player, monster)
     elif tick in player.bgs_hits:
         apply_bgs(player, monster)
@@ -26,11 +26,10 @@ def apply_dwh(player, monster):
     max_hit = player.dwhMax
     att_roll = player.dwhAttRoll
     def_roll = max((monster.defenceLvl + 9) * (monster.crushDefLvl + 64), 1)
-
     if random.randint(0, att_roll) > random.randint(0, def_roll):
         hit = roll_hit(player, max_hit)
         if hit > 0:
-            reduction = math.floor(monster.defenceLvl * 0.7)
+            reduction = math.floor(monster.defenceLvl * 0.3) #fixed bug where this was calculating reduction wrong
             updated_def_lvl = (monster.defenceLvl - reduction)
             monster.defenceLvl = max(updated_def_lvl, monster.cap, 0)  # Ensure defense does not drop below zero
     return monster.defenceLvl
@@ -51,11 +50,13 @@ def apply_ralos(player, monster):
     hits_to_apply = 2
 
     for _ in range(hits_to_apply):
-        def_roll = max((monster.defenceLvl + 9) * (monster.rangedDefLvl + 64), 1)
+        def_roll = (monster.defenceLvl + 9) * (monster.rangedDefLvl + 64)
         if random.randint(0, att_roll) > random.randint(0, def_roll):
             hit = roll_hit(player, max_hit)
             if hit > 0:
-                monster.defenceLvl = math.ceil(monster.defenceLvl - 0.1 * monster.magicLvl)
+                reduction = math.floor(monster.magicLvl*0.1)
+                updated_def_lvl = max(math.ceil(monster.defenceLvl - reduction), monster.cap)
+                monster.defenceLvl = max(updated_def_lvl, monster.cap, 0)
 
     return monster.defenceLvl
 
@@ -70,13 +71,4 @@ def apply_emaul(player, monster):
             reduction = math.floor(monster.defenceLvl * 0.35)
             updated_def_lvl = (monster.defenceLvl - reduction)
             monster.defenceLvl = max(updated_def_lvl, monster.cap, 0)  # Ensure defense does not drop below zero
-    return monster.defenceLvl
-
-def simulate_boss_fight(players, monster, max_ticks=25):
-    tick = 0
-    while tick < max_ticks:
-        for player in players:
-            reduce_defence(tick, player, monster)  # This updates monster.defenceLvl directly
-        monster.defenceLvl = max(monster.defenceLvl, 0)  # Ensure it doesn't drop below 0 after all modifications
-        tick += 1
     return monster.defenceLvl

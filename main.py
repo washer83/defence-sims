@@ -1,12 +1,12 @@
 import random
 import numpy as np
-from damage_calcs import reduce_defence
+from damage_calcs2 import reduce_defence
 
 class Player:
     def __init__(self,role):
         self.role = role
         self.bgs_hits = []
-        self.hammer_hits = []
+        self.dwh_hits = []
         self.ralos_hits = []
         self.emaul_hits = []
         self.attackLvl = 118
@@ -25,6 +25,8 @@ class monsterClass:
         monster.crushDefLvl = crush
         monster.rangedDefLvl = ranged
         monster.cap = cap
+        monster.storedDefLvl = defence
+
 
 maiden = monsterClass(350, 200, 0, 0, 0, 0)
 xarpus = monsterClass(220, 250, 0, 0, 160, 0)
@@ -52,25 +54,25 @@ def main(hit_style): #add chart input?
     player4.hitStyle = hit_style
 
     # 2 hammer 2 ralos test case
-    player1.hammer_hits = []
+    player1.dwh_hits = []
     player1.bgs_hits = []
     player1.ralos_hits = [3]
     player1.emaul_hits = []
     
-    player2.hammer_hits = []
+    player2.dwh_hits = []
     player2.bgs_hits = []
     player2.ralos_hits = [3]
     player2.emaul_hits = []
 
-    player3.hammer_hits = []
+    player3.dwh_hits = [2]
     player3.bgs_hits = []
     player3.ralos_hits = []
-    player3.emaul_hits = [2]
+    player3.emaul_hits = []
 
-    player4.hammer_hits = []
+    player4.dwh_hits = [2]
     player4.bgs_hits = []
     player4.ralos_hits = []
-    player4.emaul_hits = [2]
+    player4.emaul_hits = []
 
 
     # Player 1
@@ -112,7 +114,7 @@ def main(hit_style): #add chart input?
     fails = 0
     for i in range(num_runs):
         # Resetting monster's defense level for each simulation
-        monster.defenceLvl = 200  # or whatever the initial value should be
+        monster.defenceLvl = monster.storedDefLvl  # or whatever the initial value should be
         iter_def_lvl = simulate_boss_fight(players, monster)
         def_levels.append(iter_def_lvl)
         if iter_def_lvl < 1:
