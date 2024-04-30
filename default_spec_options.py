@@ -90,12 +90,19 @@ def create_player_setup(setup_name):
         players[3].hammer_hits = [10]
         players[3].bgs_hits = [21]
 
+    elif setup_name == "2DWH2BGS1G": #xarp
+        players[0].hammer_hits = [1]
+        players[0].ralos_hits = [7]
+        players[1].hammer_hits = [1]
+        players[2].bgs_hits = [6]
+        players[3].bgs_hits = [6]
+
     # ELDER GLAIVE SETUPS
     elif setup_name == "2EM2G":
-        players[0].ralos_hits = [11]
-        players[1].ralos_hits = [11]
-        players[2].emaul_hits = [10]
-        players[3].emaul_hits = [10]
+        players[0].ralos_hits = [4]
+        players[1].ralos_hits = [3]
+        players[2].emaul_hits = [1]
+        players[3].emaul_hits = [2]
     
     elif setup_name == "2EM2G1BGS":
         players[0].ralos_hits = [11]
@@ -116,6 +123,13 @@ def create_player_setup(setup_name):
         players[2].emaul_hits = [10]
         players[3].emaul_hits = [10]
         players[3].bgs_hits = [18]          
+
+    elif setup_name == "2EM2BGS1G": #xarp
+        players[0].hammer_hits = [1,7]
+        players[1].hammer_hits = [1]
+        players[2].em_hits = [6]
+        players[3].em_hits = [6]
+
     
     # ELDER BGS BU SETUPS
     elif setup_name == "2EM2BGS":
@@ -213,5 +227,120 @@ def create_player_setup(setup_name):
         players[0].emaul_hits = [1,7]
         players[1].emaul_hits= [1]
         players[1].bgs_hits = [17]
+
+    # Xarpus Specs
+    elif setup_name == "3DWH1BGS": #xarp
+        players[0].hammer_hits = [1]
+        players[1].hammer_hits = [1]
+        players[2].hammer_hits = [1]
+        players[3].bgs_hits = [6]
     
+    elif setup_name == "3DWH1BGS1BGS": #xarp
+        players[0].hammer_hits = [1]
+        players[1].hammer_hits = [1]
+        players[2].hammer_hits = [1]
+        players[2].bgs_hits = [7]
+        players[3].bgs_hits = [6]
+
+    elif setup_name == "3DWH1BGS2BGS": #xarp
+        players[0].hammer_hits = [1]
+        players[1].hammer_hits = [1]
+        players[2].hammer_hits = [1]
+        players[2].bgs_hits = [7]
+        players[3].bgs_hits = [6,11]
+
+    elif setup_name == "3DWH1BGS1G": #xarp
+        players[0].hammer_hits = [1]
+        players[0].ralos_hits = [11]
+        players[1].hammer_hits = [1]
+        players[2].hammer_hits = [1]
+        players[3].bgs_hits = [6]
+
+    elif setup_name == "3EM1BGS": #xarp
+        players[0].emaul_hits = [1]
+        players[1].emaul_hits = [1]
+        players[2].emaul_hits = [1]
+        players[3].bgs_hits = [6]
+    
+    elif setup_name == "3EM1BGS1BGS": #xarp
+        players[0].emaul_hits = [1]
+        players[1].emaul_hits = [1]
+        players[2].emaul_hits = [1]
+        players[2].bgs_hits = [7]
+        players[3].bgs_hits = [6]
+
+    elif setup_name == "3EM1BGS2BGS": #xarp
+        players[0].emaul_hits = [1]
+        players[1].emaul_hits = [1]
+        players[2].emaul_hits = [1]
+        players[2].bgs_hits = [7]
+        players[3].bgs_hits = [6,11]
+
+    elif setup_name == "3EM1BGS1G": #xarp
+        players[0].emaul_hits = [1]
+        players[0].ralos_hits = [11]
+        players[1].emaul_hits = [1]
+        players[2].emaul_hits = [1]
+        players[3].bgs_hits = [6]
+
+    elif setup_name == "xarpZCB":
+        players[0].emaul_hits = [1]
+        players[1].emaul_hits = [1]
+        players[2].emaul_hits = [1]
+        players[3].bgs_hits = [6,11]
+
+    #TRIO MAIDEN
+    elif setup_name == "1DWH2G":
+        players[0].ralos_hits = [11,17]
+        players[2].hammer_hits = [10]
+
+    elif setup_name == "1DWH2G1BGS":
+        players[0].ralos_hits = [11,17]
+        players[1].bgs_hits = [18]
+        players[2].hammer_hits = [10]
+
+    elif setup_name == "1DWH1G1BGS":
+        players[0].ralos_hits = [7]
+        players[0].bgs_hits = [13]
+        players[2].hammer_hits = [6]
+
+    elif setup_name == "1DWH1G1BGS1G":
+        players[0].ralos_hits = [7, 14]
+        players[0].bgs_hits = [13]
+        players[2].hammer_hits = [6]
+
+    elif setup_name == "1DWH1G1BGS1BGS":
+        players[0].ralos_hits = [7]
+        players[0].bgs_hits = [13,14]
+        players[2].hammer_hits = [6]
+
+    elif setup_name == "1EM2G":
+        players[0].ralos_hits = [11,17]
+        players[2].emaul_hits = [10]
+
+    elif setup_name == "1EM2G1BGS":
+        players[0].ralos_hits = [11,17]
+        players[1].bgs_hits = [18]
+        players[2].emaul_hits = [10]
+
+    elif setup_name == "1EM1G1BGS":
+        players[0].ralos_hits = [7]
+        players[0].bgs_hits = [13]
+        players[2].emaul_hits = [6]
+
+    elif setup_name == "1EM1G1BGS1G":
+        players[0].ralos_hits = [7, 14]
+        players[0].bgs_hits = [13]
+        players[2].emaul_hits = [6]
+
+    elif setup_name == "1EM1G1BGS1BGS":
+        players[0].ralos_hits = [7]
+        players[0].bgs_hits = [13,14]
+        players[2].emaul_hits = [6]
+
+    elif setup_name == "1DWH1G1BGS":
+        players[0].ralos_hits = [7]
+        players[0].bgs_hits = [13]
+        players[1].hammer_hits = [6]
+        
     return players

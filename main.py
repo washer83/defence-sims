@@ -1,12 +1,12 @@
 import random
 import numpy as np
-from damage_calcs2 import reduce_defence
+from damage_calcs import reduce_defence, simulate_defence_reduction
 
 class Player:
     def __init__(self,role):
         self.role = role
         self.bgs_hits = []
-        self.dwh_hits = []
+        self.hammer_hits = []
         self.ralos_hits = []
         self.emaul_hits = []
         self.attackLvl = 118
@@ -32,17 +32,6 @@ maiden = monsterClass(350, 200, 0, 0, 0, 0)
 xarpus = monsterClass(220, 250, 0, 0, 160, 0)
 sote = monsterClass(250, 200, 70, 70, 150, 100)
 
-
-def simulate_boss_fight(players, monster, max_ticks=21):
-    tick = 0
-    while tick < max_ticks:
-        for player in players:
-            reduce_defence(tick, player, monster)  # This updates monster.defenceLvl directly
-        monster.defenceLvl = max(monster.defenceLvl, 0)  # Ensure it doesn't drop below 0 after all modifications
-        tick += 1
-    return monster.defenceLvl
-
-
 def main(hit_style): #add chart input?
     player1 = Player('player1')
     player1.hitStyle = hit_style
@@ -54,22 +43,22 @@ def main(hit_style): #add chart input?
     player4.hitStyle = hit_style
 
     # 2 hammer 2 ralos test case
-    player1.dwh_hits = []
+    player1.hammer_hits = []
     player1.bgs_hits = []
     player1.ralos_hits = [3]
     player1.emaul_hits = []
     
-    player2.dwh_hits = []
+    player2.hammer_hits = []
     player2.bgs_hits = []
     player2.ralos_hits = [3]
     player2.emaul_hits = []
 
-    player3.dwh_hits = [2]
+    player3.hammer_hits = [2]
     player3.bgs_hits = []
     player3.ralos_hits = []
     player3.emaul_hits = []
 
-    player4.dwh_hits = [2]
+    player4.hammer_hits = [2]
     player4.bgs_hits = []
     player4.ralos_hits = []
     player4.emaul_hits = []
@@ -92,7 +81,7 @@ def main(hit_style): #add chart input?
     player3.dwhMax = 82             # accounts for dmg bonus from spec
     player3.bgsAttRoll = 69434      # slash, max gear
     player3.bgsMax = 77             
-    player3.emaulAttRoll = 35872    # crush, accurate, max gear
+    player3.emaulAttRoll = 35872 #* 1.25    # crush, accurate, max gear
     player3.emaulMax = 66           # pce dwh
 
     # Player 4
@@ -100,7 +89,7 @@ def main(hit_style): #add chart input?
     player4.dwhMax = 82             # accounts for dmg bonus from spec
     player4.bgsAttRoll = 69434      # slash, max gear
     player4.bgsMax = 77             
-    player4.emaulAttRoll = 35872    # crush, accurate, max gear
+    player4.emaulAttRoll = 35872 #* 1.25    # crush, accurate, max gear
     player4.emaulMax = 68           # pce dwh
 
 
@@ -115,7 +104,7 @@ def main(hit_style): #add chart input?
     for i in range(num_runs):
         # Resetting monster's defense level for each simulation
         monster.defenceLvl = monster.storedDefLvl  # or whatever the initial value should be
-        iter_def_lvl = simulate_boss_fight(players, monster)
+        iter_def_lvl = simulate_defence_reduction(players, monster)
         def_levels.append(iter_def_lvl)
         if iter_def_lvl < 1:
             wins_0 += 1
